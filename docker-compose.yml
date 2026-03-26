@@ -1,0 +1,30 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: deps
+    command: sh -c "cd server && npm run dev"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server/src:/app/server/src
+      - ./server/data:/app/server/data
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: deps
+    command: sh -c "cd client && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client/src:/app/client/src
+      - ./client/index.html:/app/client/index.html
+    depends_on:
+      - server
