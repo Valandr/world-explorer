@@ -26,5 +26,13 @@ services:
     volumes:
       - ./client/src:/app/client/src
       - ./client/index.html:/app/client/index.html
+      - ./client/vite.config.ts:/app/client/vite.config.ts
+      - ./client/tailwind.config.js:/app/client/tailwind.config.js
+      - ./client/postcss.config.js:/app/client/postcss.config.js
+      - ./client/tsconfig.json:/app/client/tsconfig.json
+      - ./tsconfig.base.json:/app/tsconfig.base.json
+    environment:
+      - NODE_ENV=development
+      - API_URL=http://server:3000
     depends_on:
       - server

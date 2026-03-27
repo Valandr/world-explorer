@@ -2,10 +2,10 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json ./
-COPY server/package.json ./server/
-COPY client/package.json client/.npmrc ./client/
-RUN cd server && npm install
-RUN cd client && npm install
+COPY server/package.json server/package-lock.json ./server/
+COPY client/package.json client/package-lock.json client/.npmrc ./client/
+RUN cd server && npm ci
+RUN cd client && npm ci
 
 # Stage 2: Build
 FROM node:20-alpine AS build
