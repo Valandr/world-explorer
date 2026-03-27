@@ -1,4 +1,7 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import { resolve } from 'path';
+
+dotenv.config({ path: resolve(import.meta.dirname ?? '.', '..', '..', '.env') });
 import express from 'express';
 import cors from 'cors';
 import { join, dirname } from 'path';
