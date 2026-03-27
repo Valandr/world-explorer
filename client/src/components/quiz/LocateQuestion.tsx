@@ -60,7 +60,7 @@ export default function LocateQuestion({ question, onAnswer }: LocateQuestionPro
           )}
         </WorldMap>
         {revealed && clicked && (
-          <p className="mt-2 text-center text-sm">
+          <p className="mt-2 text-center text-sm text-muted-foreground">
             Distance:{' '}
             {Math.round(
               haversineDistance(clicked.lat, clicked.lng, question.answer.lat, question.answer.lng),
