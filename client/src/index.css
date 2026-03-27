@@ -1,29 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 30% 97%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 225 75% 55%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
+    --secondary: 220 25% 93%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 220 20% 94%;
+    --muted-foreground: 220 10% 46%;
+    --accent: 220 25% 93%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    --border: 220 20% 90%;
+    --input: 220 20% 90%;
+    --ring: 225 75% 55%;
+    --radius: 0.75rem;
   }
 }
 
@@ -33,12 +35,80 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family:
+      'DM Sans',
+      system-ui,
+      -apple-system,
+      sans-serif;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, hsl(225 80% 55% / 0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 50%, hsl(225 80% 55% / 0.04), transparent);
+    background-attachment: fixed;
   }
+}
+
+/* Custom range slider */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: hsl(var(--secondary));
+  outline: none;
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  box-shadow: 0 2px 8px hsl(var(--primary) / 0.4);
+  border: 3px solid white;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 3px 12px hsl(var(--primary) / 0.5);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  box-shadow: 0 2px 8px hsl(var(--primary) / 0.4);
+  border: 3px solid white;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .leaflet-container {
   min-height: 500px;
   width: 100%;
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
+}
+
+/* Stagger animation for child elements */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeSlideUp 0.4s ease-out both;
 }

@@ -12,11 +12,11 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     return (
       <div
         ref={ref}
-        className={cn('relative h-4 w-full overflow-hidden rounded-full bg-secondary', className)}
+        className={cn('relative h-3 w-full overflow-hidden rounded-full bg-blue-100', className)}
         {...props}
       >
         <div
-          className="h-full bg-primary transition-all duration-300"
+          className="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600 shadow-sm shadow-blue-500/30 transition-all duration-500 ease-out"
           style={{ width: `${percentage}%` }}
         />
       </div>
