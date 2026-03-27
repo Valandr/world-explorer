@@ -15,18 +15,19 @@ export default function Quiz() {
   };
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Quiz Geographie</h1>
-
-      <div className="flex flex-wrap gap-2">
-        {categories.map((cat) => {
-          const score = bestScore(cat);
-          return (
-            <Badge key={cat} variant={score >= 70 ? 'default' : 'secondary'}>
-              {cat}: {score}%
-            </Badge>
-          );
-        })}
+    <div className="space-y-8">
+      <div className="space-y-3">
+        <h1 className="text-3xl font-bold tracking-tight">Quiz Geographie</h1>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((cat) => {
+            const score = bestScore(cat);
+            return (
+              <Badge key={cat} variant={score >= 70 ? 'default' : 'secondary'}>
+                {cat}: {score}%
+              </Badge>
+            );
+          })}
+        </div>
       </div>
 
       <QuizSetup onStart={handleStart} />

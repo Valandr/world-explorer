@@ -18,7 +18,9 @@ export default function QuizSetup({ onStart, loading }: QuizSetupProps) {
   const [continents, setContinents] = useState<Continent[]>([]);
 
   useEffect(() => {
-    fetchContinents().then(setContinents).catch(() => {});
+    fetchContinents()
+      .then(setContinents)
+      .catch(() => {});
   }, []);
 
   const handleSubmit = () => {
@@ -26,13 +28,16 @@ export default function QuizSetup({ onStart, loading }: QuizSetupProps) {
   };
 
   return (
-    <Card className="mx-auto max-w-md">
-      <CardHeader>
-        <CardTitle>Configurer le Quiz</CardTitle>
+    <Card className="mx-auto max-w-md animate-fade-in">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xl font-bold tracking-tight">Configurer le Quiz</CardTitle>
+        <p className="text-sm text-muted-foreground">Personnalisez votre session d'apprentissage</p>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Type</label>
+      <CardContent className="space-y-5">
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Type
+          </label>
           <Select
             value={type}
             onChange={(e) => setType(e.target.value as 'mcq' | 'locate')}
@@ -43,8 +48,10 @@ export default function QuizSetup({ onStart, loading }: QuizSetupProps) {
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Categorie</label>
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Categorie
+          </label>
           <Select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -58,8 +65,10 @@ export default function QuizSetup({ onStart, loading }: QuizSetupProps) {
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Continent</label>
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Continent
+          </label>
           <Select
             value={continent}
             onChange={(e) => setContinent(e.target.value)}
@@ -70,8 +79,13 @@ export default function QuizSetup({ onStart, loading }: QuizSetupProps) {
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Nombre de questions: {count}</label>
+        <div className="space-y-3">
+          <div className="flex items-baseline justify-between">
+            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Questions
+            </label>
+            <span className="text-2xl font-bold tabular-nums text-blue-600">{count}</span>
+          </div>
           <input
             type="range"
             min="5"
@@ -80,9 +94,13 @@ export default function QuizSetup({ onStart, loading }: QuizSetupProps) {
             onChange={(e) => setCount(Number(e.target.value))}
             className="w-full"
           />
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>5</span>
+            <span>30</span>
+          </div>
         </div>
 
-        <Button onClick={handleSubmit} className="w-full" disabled={loading}>
+        <Button onClick={handleSubmit} className="w-full" size="lg" disabled={loading}>
           {loading ? 'Chargement...' : 'Commencer'}
         </Button>
       </CardContent>

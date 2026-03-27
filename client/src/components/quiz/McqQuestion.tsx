@@ -43,9 +43,15 @@ export default function McqQuestion({ question, onAnswer }: McqQuestionProps) {
             key={i}
             variant="outline"
             className={cn(
-              'h-auto py-3 text-left justify-start',
-              revealed && i === question.correctIndex && 'bg-primary/10 border-primary text-primary',
-              revealed && i === selected && i !== question.correctIndex && 'bg-destructive/10 border-destructive text-destructive',
+              'h-auto py-3 text-left justify-start transition-all duration-200',
+              !revealed && 'hover:-translate-y-0.5 hover:shadow-md',
+              revealed &&
+                i === question.correctIndex &&
+                'border-emerald-400 bg-emerald-50 text-emerald-700 shadow-sm shadow-emerald-500/10',
+              revealed &&
+                i === selected &&
+                i !== question.correctIndex &&
+                'border-red-300 bg-red-50 text-red-600 shadow-sm shadow-red-500/10',
             )}
             onClick={() => handleSelect(i)}
             disabled={revealed}

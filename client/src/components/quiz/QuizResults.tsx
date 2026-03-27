@@ -25,14 +25,16 @@ export default function QuizResults({ result, onRestart, onHome }: QuizResultsPr
   }, [isGood, fireMultiple, play]);
 
   return (
-    <Card className="mx-auto max-w-md">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl">
+    <Card className="mx-auto max-w-md animate-fade-in">
+      <CardHeader className="text-center pb-2">
+        <CardTitle className="text-2xl font-bold tracking-tight">
           {isGood ? 'Bravo !' : 'Pas mal !'}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 text-center">
-        <div className="text-6xl font-bold text-primary">{percentage}%</div>
+        <div className="text-6xl font-bold tabular-nums bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
+          {percentage}%
+        </div>
         <p className="text-lg text-muted-foreground">
           {result.score} / {result.total} bonnes reponses
         </p>
