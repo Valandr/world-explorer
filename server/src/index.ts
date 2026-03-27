@@ -19,7 +19,6 @@ import seedRouter from './routes/seed.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
-const PORT = parseInt(process.env.PORT || '3000', 10);
 
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
 app.use(express.json());
@@ -48,9 +47,5 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(join(clientDist, 'index.html'));
   });
 }
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
 
 export default app;
