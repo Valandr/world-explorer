@@ -3,7 +3,7 @@ FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json ./
 COPY server/package.json ./server/
-COPY client/package.json ./client/
+COPY client/package.json client/.npmrc ./client/
 RUN cd server && npm install
 RUN cd client && npm install
 
@@ -31,4 +31,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
   CMD wget -qO- http://localhost:3000/api/health || exit 1
 
-CMD ["node", "server/dist/index.js"]
+CMD ["node", "server/dist/server.js"]
