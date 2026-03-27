@@ -11,20 +11,24 @@ export default function Navbar() {
   const location = useLocation();
 
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
-        <Link to="/" className="mr-6 flex items-center space-x-2">
-          <span className="text-xl">🌍</span>
-          <span className="font-bold">WorldExplorer</span>
+    <nav className="sticky top-0 z-50 border-b border-white/60 bg-white/70 backdrop-blur-lg">
+      <div className="container flex h-16 items-center">
+        <Link to="/" className="mr-8 flex items-center gap-2.5">
+          <span className="text-2xl">🌍</span>
+          <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-lg font-bold tracking-tight text-transparent">
+            WorldExplorer
+          </span>
         </Link>
-        <div className="flex gap-6">
+        <div className="flex gap-1">
           {links.map((link) => (
             <Link
               key={link.to}
               to={link.to}
               className={cn(
-                'text-sm font-medium transition-colors hover:text-primary',
-                location.pathname === link.to ? 'text-primary' : 'text-muted-foreground',
+                'rounded-lg px-3.5 py-2 text-sm font-medium transition-all duration-200',
+                location.pathname === link.to
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-muted-foreground hover:bg-blue-50/60 hover:text-blue-600',
               )}
             >
               {link.label}
