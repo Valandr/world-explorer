@@ -36,9 +36,20 @@ const CONTINENT_MAP: Record<string, string> = {
 
 export async function importData(db: Database.Database, geonamesUsername: string): Promise<void> {
   console.log('Fetching countries from REST Countries API...');
-  const response = await fetch('https://restcountries.com/v3.1/all');
+  const mainFields = 'name,cca2,cca3,capital,population,region,languages,latlng,flag,flags';
+  const response = await fetch(`https://restcountries.com/v3.1/all?fields=${mainFields}`);
   if (!response.ok) throw new Error(`REST Countries API error: ${response.status}`);
-  const countries: RestCountry[] = await response.json();
+  const rawCountries = await response.json() as Omit<RestCountry, 'area' | 'subregion'>[];
+
+  const extraFields = 'cca2,area,subregion';
+  const extraRes = await fetch(`https://restcountries.com/v3.1/all?fields=${extraFields}`);
+  const extraData = extraRes.ok ? await extraRes.json() as { cca2: string; area: number; subregion?: string }[] : [];
+  const extraMap = new Map(extraData.map((e) => [e.cca2, e]));
+
+  const countries: RestCountry[] = rawCountries.map((c) => {
+    const extra = extraMap.get(c.cca2);
+    return { ...c, area: extra?.area ?? 0, subregion: extra?.subregion };
+  });
 
   console.log(`Fetched ${countries.length} countries. Importing...`);
 
@@ -75,12 +86,13 @@ export async function importData(db: Database.Database, geonamesUsername: string
       const continentCode = CONTINENT_MAP[c.region] ?? 'AM';
       const continent = getContinent.get(continentCode) as { id: number } | undefined;
 
-      if (c.subregion) {
-        insertRegion.run(c.subregion, continent?.id ?? 1);
+      const regionName = c.subregion || c.region;
+      if (regionName) {
+        insertRegion.run(regionName, continent?.id ?? 1);
       }
 
-      const region = c.subregion
-        ? (getRegion.get(c.subregion) as { id: number } | undefined)
+      const region = regionName
+        ? (getRegion.get(regionName) as { id: number } | undefined)
         : null;
 
       insertCountry.run(
