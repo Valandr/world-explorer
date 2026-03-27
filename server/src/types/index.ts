@@ -1,15 +1,3 @@
-export interface Continent {
-  id: number;
-  name: string;
-  code: string;
-}
-
-export interface Region {
-  id: number;
-  name: string;
-  continent_id: number;
-}
-
 export interface Country {
   id: number;
   name: string;
@@ -43,13 +31,6 @@ export interface City {
   is_capital: number;
 }
 
-export interface CountryDetail extends Country {
-  continent: string | null;
-  region: string | null;
-  languages: Language[];
-  cities: City[];
-}
-
 export interface McqQuestion {
   id: number;
   type: 'mcq';
@@ -71,10 +52,3 @@ export interface LocateQuestion {
 }
 
 export type QuizQuestion = McqQuestion | LocateQuestion;
-
-export interface QuizParams {
-  type: 'mcq' | 'locate';
-  category: 'capital' | 'country' | 'flag' | 'population' | 'language';
-  continent?: string;
-  count: number;
-}

@@ -65,12 +65,10 @@ export function useQuiz() {
 
   return {
     state,
-    questions,
     currentQuestion: questions[currentIndex] ?? null,
     currentIndex,
     score,
     total: questions.length,
-    answers,
     result,
     startQuiz,
     submitAnswer,

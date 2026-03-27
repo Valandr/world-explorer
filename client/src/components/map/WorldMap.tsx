@@ -4,6 +4,7 @@ import 'react-leaflet-cluster/dist/assets/MarkerCluster.css';
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css';
 import type { LatLngExpression } from 'leaflet';
 import type { Country } from '@/types';
+import { CountryFlag } from '@/components/ui/country-flag';
 
 interface WorldMapProps {
   countries?: Country[];
@@ -46,15 +47,13 @@ export default function WorldMap({
             >
               <Popup>
                 <div className="text-center">
-                  {country.flag_url ? (
-                    <img
-                      src={country.flag_url}
-                      alt={`Drapeau ${country.name}`}
-                      className="mx-auto h-8 w-12 rounded border border-border object-cover"
-                    />
-                  ) : (
-                    <span className="text-2xl">{country.flag_emoji}</span>
-                  )}
+                  <CountryFlag
+                    flagUrl={country.flag_url}
+                    flagEmoji={country.flag_emoji}
+                    name={country.name}
+                    imgClassName="mx-auto h-8 w-12"
+                    emojiClassName="text-2xl"
+                  />
                   <p className="font-semibold">{country.name}</p>
                   {country.capital && (
                     <p className="text-sm text-muted-foreground">{country.capital}</p>

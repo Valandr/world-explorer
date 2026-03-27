@@ -14,7 +14,7 @@ export function getDb(): Database.Database {
   return db;
 }
 
-export function createDb(filename?: string): Database.Database {
+function createDb(filename?: string): Database.Database {
   const dbPath = filename ?? join(__dirname, '..', '..', 'data', 'world-explorer.db');
   const instance = new Database(filename === ':memory:' ? ':memory:' : dbPath);
 
@@ -25,11 +25,4 @@ export function createDb(filename?: string): Database.Database {
   instance.exec(schema);
 
   return instance;
-}
-
-export function closeDb(): void {
-  if (db) {
-    db.close();
-    db = null;
-  }
 }

@@ -1,27 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Select } from '@/components/ui/select';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { fetchContinents } from '@/lib/api';
-import type { Continent, QuizConfig } from '@/types';
+import { useContinents } from '@/hooks/useContinents';
+import type { QuizConfig } from '@/types';
 
 interface QuizSetupProps {
   onStart: (config: QuizConfig) => void;
-  loading?: boolean;
 }
 
-export default function QuizSetup({ onStart, loading }: QuizSetupProps) {
+export default function QuizSetup({ onStart }: QuizSetupProps) {
   const [type, setType] = useState<'mcq' | 'locate'>('mcq');
   const [category, setCategory] = useState('capital');
   const [continent, setContinent] = useState('');
   const [count, setCount] = useState(10);
-  const [continents, setContinents] = useState<Continent[]>([]);
-
-  useEffect(() => {
-    fetchContinents()
-      .then(setContinents)
-      .catch(() => {});
-  }, []);
+  const continents = useContinents();
 
   const handleSubmit = () => {
     onStart({ type, category, continent, count });
@@ -100,8 +93,8 @@ export default function QuizSetup({ onStart, loading }: QuizSetupProps) {
           </div>
         </div>
 
-        <Button onClick={handleSubmit} className="w-full" size="lg" disabled={loading}>
-          {loading ? 'Chargement...' : 'Commencer'}
+        <Button onClick={handleSubmit} className="w-full" size="lg">
+          Commencer
         </Button>
       </CardContent>
     </Card>

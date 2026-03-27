@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge';
+import { CountryFlag } from '@/components/ui/country-flag';
 import type { CountryDetail } from '@/types';
 
 interface CountryPopupProps {
@@ -14,11 +15,13 @@ export default function CountryPopup({ country }: CountryPopupProps) {
   return (
     <div className="space-y-3 p-2">
       <div className="flex items-center gap-3">
-        {country.flag_url ? (
-          <img src={country.flag_url} alt={`Drapeau ${country.name}`} className="h-10 w-14 rounded border border-border object-cover" />
-        ) : (
-          <span className="text-4xl">{country.flag_emoji}</span>
-        )}
+        <CountryFlag
+          flagUrl={country.flag_url}
+          flagEmoji={country.flag_emoji}
+          name={country.name}
+          imgClassName="h-10 w-14"
+          emojiClassName="text-4xl"
+        />
         <div>
           <h3 className="text-lg font-bold">{country.name}</h3>
           {country.official_name && (

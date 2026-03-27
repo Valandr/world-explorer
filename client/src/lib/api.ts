@@ -1,4 +1,4 @@
-import type { Country, CountryDetail, Continent, Region, Language, City, QuizQuestion } from '@/types';
+import type { Country, CountryDetail, Continent, QuizQuestion } from '@/types';
 
 const BASE = '/api';
 
@@ -29,22 +29,6 @@ export function fetchCountry(code: string): Promise<CountryDetail> {
 
 export function fetchContinents(): Promise<Continent[]> {
   return fetchJson(`${BASE}/continents`);
-}
-
-export function fetchRegions(): Promise<Region[]> {
-  return fetchJson(`${BASE}/regions`);
-}
-
-export function fetchLanguages(): Promise<Language[]> {
-  return fetchJson(`${BASE}/languages`);
-}
-
-export function fetchCities(params?: { country?: string; is_capital?: number }): Promise<City[]> {
-  const searchParams = new URLSearchParams();
-  if (params?.country) searchParams.set('country', params.country);
-  if (params?.is_capital !== undefined) searchParams.set('is_capital', String(params.is_capital));
-  const qs = searchParams.toString();
-  return fetchJson(`${BASE}/cities${qs ? `?${qs}` : ''}`);
 }
 
 export function fetchQuiz(params: {

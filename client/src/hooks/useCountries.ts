@@ -10,16 +10,14 @@ export function useCountries(params?: {
 }) {
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    setError(null);
     fetchCountries(params)
       .then(setCountries)
-      .catch((e) => setError(e.message))
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, [params?.continent, params?.region, params?.language, params?.search]);
 
-  return { countries, loading, error };
+  return { countries, loading };
 }

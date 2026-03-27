@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Select } from '@/components/ui/select';
-import { fetchContinents } from '@/lib/api';
-import type { Continent } from '@/types';
+import { useContinents } from '@/hooks/useContinents';
 
 interface MapFiltersProps {
   onFilterChange: (filters: { continent: string; search: string }) => void;
 }
 
 export default function MapFilters({ onFilterChange }: MapFiltersProps) {
-  const [continents, setContinents] = useState<Continent[]>([]);
+  const continents = useContinents();
   const [continent, setContinent] = useState('');
   const [search, setSearch] = useState('');
-
-  useEffect(() => {
-    fetchContinents().then(setContinents).catch(() => {});
-  }, []);
 
   useEffect(() => {
     onFilterChange({ continent, search });
