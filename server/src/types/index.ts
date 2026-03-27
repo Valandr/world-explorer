@@ -58,6 +58,7 @@ export interface McqQuestion {
   choices: string[];
   correctIndex: number;
   countryCode: string;
+  flagUrl?: string;
 }
 
 export interface LocateQuestion {

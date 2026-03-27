@@ -29,6 +29,13 @@ export default function McqQuestion({ question, onAnswer }: McqQuestionProps) {
     <Card>
       <CardHeader>
         <CardTitle className="text-lg">{question.question}</CardTitle>
+        {question.flagUrl && (
+          <img
+            src={question.flagUrl}
+            alt="Drapeau"
+            className="mx-auto mt-3 h-24 w-36 rounded-md border border-border object-cover shadow-sm"
+          />
+        )}
       </CardHeader>
       <CardContent className="grid gap-3">
         {question.choices.map((choice, i) => (
@@ -37,8 +44,8 @@ export default function McqQuestion({ question, onAnswer }: McqQuestionProps) {
             variant="outline"
             className={cn(
               'h-auto py-3 text-left justify-start',
-              revealed && i === question.correctIndex && 'bg-green-100 border-green-500 text-green-800',
-              revealed && i === selected && i !== question.correctIndex && 'bg-red-100 border-red-500 text-red-800',
+              revealed && i === question.correctIndex && 'bg-primary/10 border-primary text-primary',
+              revealed && i === selected && i !== question.correctIndex && 'bg-destructive/10 border-destructive text-destructive',
             )}
             onClick={() => handleSelect(i)}
             disabled={revealed}

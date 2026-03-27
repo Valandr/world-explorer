@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import type { LatLngExpression } from 'leaflet';
 import type { Country } from '@/types';
 
@@ -31,25 +32,31 @@ export default function WorldMap({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {onClick && <MapClickHandler onClick={onClick} />}
-      {countries.map((country) =>
-        country.lat && country.lng ? (
-          <Marker
-            key={country.code_alpha2}
-            position={[country.lat, country.lng]}
-            eventHandlers={{
-              click: () => onCountryClick?.(country),
-            }}
-          >
-            <Popup>
-              <div className="text-center">
-                <span className="text-2xl">{country.flag_emoji}</span>
-                <p className="font-semibold">{country.name}</p>
-                {country.capital && <p className="text-sm text-gray-500">{country.capital}</p>}
-              </div>
-            </Popup>
-          </Marker>
-        ) : null,
-      )}
+      <MarkerClusterGroup chunkedLoading>
+        {countries.map((country) =>
+          country.lat && country.lng ? (
+            <Marker
+              key={country.code_alpha2}
+              position={[country.lat, country.lng]}
+              eventHandlers={{
+                click: () => onCountryClick?.(country),
+              }}
+            >
+              <Popup>
+                <div className="text-center">
+                  {country.flag_url ? (
+                    <img src={country.flag_url} alt={`Drapeau ${country.name}`} className="mx-auto h-8 w-12 rounded border border-border object-cover" />
+                  ) : (
+                    <span className="text-2xl">{country.flag_emoji}</span>
+                  )}
+                  <p className="font-semibold">{country.name}</p>
+                  {country.capital && <p className="text-sm text-muted-foreground">{country.capital}</p>}
+                </div>
+              </Popup>
+            </Marker>
+          ) : null,
+        )}
+      </MarkerClusterGroup>
       {children}
     </MapContainer>
   );

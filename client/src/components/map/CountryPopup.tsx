@@ -14,7 +14,11 @@ export default function CountryPopup({ country }: CountryPopupProps) {
   return (
     <div className="space-y-3 p-2">
       <div className="flex items-center gap-3">
-        <span className="text-4xl">{country.flag_emoji}</span>
+        {country.flag_url ? (
+          <img src={country.flag_url} alt={`Drapeau ${country.name}`} className="h-10 w-14 rounded border border-border object-cover" />
+        ) : (
+          <span className="text-4xl">{country.flag_emoji}</span>
+        )}
         <div>
           <h3 className="text-lg font-bold">{country.name}</h3>
           {country.official_name && (

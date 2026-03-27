@@ -52,7 +52,7 @@ router.get('/quiz/generate', (req, res) => {
   const questions: McqQuestion[] = selected.map((country, i) => {
     const others = allCountries.filter((c) => c.id !== country.id);
     const distractors = shuffle(others).slice(0, 3);
-    const { question, correct, wrong } = buildMcqQuestion(
+    const { question, correct, wrong, flagUrl } = buildMcqQuestion(
       String(category),
       country,
       distractors,
@@ -67,6 +67,7 @@ router.get('/quiz/generate', (req, res) => {
       choices,
       correctIndex: choices.indexOf(correct),
       countryCode: country.code_alpha2,
+      ...(flagUrl && { flagUrl }),
     };
   });
 
@@ -87,7 +88,7 @@ function buildMcqQuestion(
   country: Country & { continent_name: string },
   distractors: (Country & { continent_name: string })[],
   db: ReturnType<typeof getDb>,
-): { question: string; correct: string; wrong: string[] } {
+): { question: string; correct: string; wrong: string[]; flagUrl?: string | null } {
   switch (category) {
     case 'capital':
       return {
@@ -103,9 +104,10 @@ function buildMcqQuestion(
       };
     case 'flag':
       return {
-        question: `À quel pays appartient ce drapeau ? ${country.flag_emoji}`,
+        question: 'À quel pays appartient ce drapeau ?',
         correct: country.name,
         wrong: distractors.map((d) => d.name),
+        flagUrl: country.flag_url,
       };
     case 'population': {
       const format = (n: number | null) =>
