@@ -1,5 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.css';
+import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css';
 import type { LatLngExpression } from 'leaflet';
 import type { Country } from '@/types';
 
@@ -45,12 +47,18 @@ export default function WorldMap({
               <Popup>
                 <div className="text-center">
                   {country.flag_url ? (
-                    <img src={country.flag_url} alt={`Drapeau ${country.name}`} className="mx-auto h-8 w-12 rounded border border-border object-cover" />
+                    <img
+                      src={country.flag_url}
+                      alt={`Drapeau ${country.name}`}
+                      className="mx-auto h-8 w-12 rounded border border-border object-cover"
+                    />
                   ) : (
                     <span className="text-2xl">{country.flag_emoji}</span>
                   )}
                   <p className="font-semibold">{country.name}</p>
-                  {country.capital && <p className="text-sm text-muted-foreground">{country.capital}</p>}
+                  {country.capital && (
+                    <p className="text-sm text-muted-foreground">{country.capital}</p>
+                  )}
                 </div>
               </Popup>
             </Marker>
