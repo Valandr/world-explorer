@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useQuiz } from '@/hooks/useQuiz';
 import { useProgress } from '@/hooks/useProgress';
 import { useConfetti } from '@/hooks/useConfetti';
@@ -19,16 +19,21 @@ export default function QuizPlay() {
   const { addResult } = useProgress();
   const { fire } = useConfetti();
   const { play } = useSound('/sounds/success.mp3');
+  const resultSaved = useRef(false);
 
   useEffect(() => {
     if (config && state === 'idle') {
       startQuiz(config);
     }
-  }, [config, state, startQuiz]);
+  }, [state === 'idle' && config?.type, state === 'idle' && config?.category, state === 'idle' && config?.continent, state === 'idle' && config?.count, startQuiz]);
 
   useEffect(() => {
-    if (result) {
+    if (result && !resultSaved.current) {
+      resultSaved.current = true;
       addResult(result);
+    }
+    if (!result) {
+      resultSaved.current = false;
     }
   }, [result, addResult]);
 
@@ -41,8 +46,7 @@ export default function QuizPlay() {
   };
 
   if (!config) {
-    navigate('/quiz');
-    return null;
+    return <Navigate to="/quiz" replace />;
   }
 
   if (state === 'loading') {
